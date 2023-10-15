@@ -6,7 +6,7 @@ const VoterPage = () => {
 
   useEffect(() => {
     // Fetch voter data from the API
-    fetch("http://localhost:8080/api/voters")
+    fetch(`${process.env.REACT_APP_API_URL}/api/voters`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -24,7 +24,7 @@ const VoterPage = () => {
 
   const handleDeleteVoter = (id) => {
     // Send a DELETE request to your API
-    fetch(`http://localhost:8080/api/voters/${id}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/voters/${id}`, {
       method: "DELETE",
     })
       .then((response) => {
@@ -73,7 +73,7 @@ const VoterPage = () => {
               <td>{voter.name}</td>
               <td>
                 <img
-                  src={`http://localhost:8080${voter.photo}`}
+                  src={`${process.env.REACT_APP_API_URL}${voter.photo}`}
                   alt={`${voter.name}'s Photo`}
                   className="img-thumbnail"
                   style={{
@@ -88,9 +88,15 @@ const VoterPage = () => {
               <td>{voter.district}</td>
               <td>{voter.status}</td>
               <td>
-                <button className="btn btn-warning me-2">
-                  <i className="fas fa-edit"></i> Edit
-                </button>
+                <Link
+                  to={{
+                    pathname: `/editVoter/${voter._id}`,
+                  }}
+                >
+                  <button className="btn btn-warning me-2">
+                    <i className="fas fa-edit"></i> Edit
+                  </button>
+                </Link>
               </td>
               <td>
                 <button

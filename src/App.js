@@ -13,6 +13,8 @@ import CandidatePage from "./pages/CandidatePage";
 import AddCandidateForm from "./features/AddCandidateForm";
 import VoterPage from "./pages/VoterPage";
 import AddVoterForm from "./features/AddVoterForm";
+import EditCandidateForm from "./features/EditCandidateForm";
+import EditVoterForm from "./features/EditVoterForm";
 
 const router = createBrowserRouter([
   {
@@ -32,12 +34,20 @@ const router = createBrowserRouter([
     element: <AddCandidateForm />,
   },
   {
+    path: "/editCandidate/:id",
+    element: <EditCandidateForm />,
+  },
+  {
     path: "/voter",
     element: <VoterPage />,
   },
   {
     path: "/addVoter",
     element: <AddVoterForm />,
+  },
+  {
+    path: "/editVoter/:id",
+    element: <EditVoterForm />,
   },
 ]);
 function App() {

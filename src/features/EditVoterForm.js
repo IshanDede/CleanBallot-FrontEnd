@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-const AddVoterForm = () => {
+const EditVoterForm = () => {
+  const { id } = useParams();
   const [formData, setFormData] = useState({
     name: "",
     photo: null,
@@ -18,17 +19,16 @@ const AddVoterForm = () => {
   const [showCancelModal, setShowCancelModal] = useState(false);
 
   useEffect(() => {
-    if (formData.dateOfBirth) {
-      // Calculate age based on Date of Birth and the current year
-      const birthDate = new Date(formData.dateOfBirth);
-      const currentDate = new Date();
-      const age = currentDate.getFullYear() - birthDate.getFullYear();
-      setFormData({
-        ...formData,
-        age: age,
+    // Fetch candidate data based on the 'id' from the URL
+    fetch(`${process.env.REACT_APP_API_URL}/api/voters/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setFormData(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
       });
-    }
-  }, [formData.dateOfBirth]);
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,8 +50,8 @@ const AddVoterForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`${process.env.REACT_APP_API_URL}/api/voters`, {
-      method: "POST",
+    fetch(`${process.env.REACT_APP_API_URL}/api/voters/${id}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json", // Adjust the content type as needed
       },
@@ -66,12 +66,12 @@ const AddVoterForm = () => {
       .then((data) => {
         // Handle the successful response from the server
         console.log("Response from server:", data);
-        toast.success("Voter saved successfully!"); // Display a success toast
+        toast.success("Voter updated successfully!"); // Display a success toast
       })
       .catch((error) => {
         // Handle errors
         console.error("Error:", error);
-        toast.error("Error saving voter"); // Display an error toast
+        toast.error("Error updating voter"); // Display an error toast
       });
   };
 
@@ -299,7 +299,7 @@ const AddVoterForm = () => {
       <div className="container-fluid bg-light p-4">
         <div className="row">
           <div className="col-md-6 border p-4">
-            <h1 className="text-center">Add Voter</h1>
+            <h1 className="text-center">Edit Voter</h1>
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="name" className="form-label">
@@ -494,4 +494,4 @@ const AddVoterForm = () => {
   );
 };
 
-export default AddVoterForm;
+export default EditVoterForm;

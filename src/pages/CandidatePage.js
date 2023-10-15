@@ -6,7 +6,7 @@ const CandidatePage = () => {
 
   useEffect(() => {
     // Fetch candidate data from the API
-    fetch("http://localhost:8080/api/candidates")
+    fetch(`${process.env.REACT_APP_API_URL}/api/candidates`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -24,7 +24,7 @@ const CandidatePage = () => {
 
   const handleDeleteCandidate = (id) => {
     // Send a DELETE request to your API
-    fetch(`http://localhost:8080/api/candidates/${id}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/candidates/${id}`, {
       method: "DELETE",
     })
       .then((response) => {
@@ -61,6 +61,7 @@ const CandidatePage = () => {
             <th>Party</th>
             <th>Symbol</th>
             <th>State</th>
+            <th>Votes Recieved</th>
             <th>Status</th>
             <th>Edit</th>
             <th>Delete</th>
@@ -73,7 +74,7 @@ const CandidatePage = () => {
               <td>{candidate.party}</td>
               <td>
                 <img
-                  src={`http://localhost:8080${candidate.partyPhoto}`}
+                  src={`${process.env.REACT_APP_API_URL}${candidate.partyPhoto}`}
                   alt={`${candidate.party} Symbol`}
                   className="img-thumbnail"
                   style={{
@@ -83,11 +84,18 @@ const CandidatePage = () => {
                 />
               </td>
               <td>{candidate.state}</td>
+              <td>{candidate.voteCount}</td>
               <td>{candidate.status}</td>
               <td>
-                <button className="btn btn-warning me-2">
-                  <i className="fas fa-edit"></i> Edit
-                </button>
+                <Link
+                  to={{
+                    pathname: `/editCandidate/${candidate._id}`,
+                  }}
+                >
+                  <button className="btn btn-warning me-2">
+                    <i className="fas fa-edit"></i> Edit
+                  </button>
+                </Link>
               </td>
               <td>
                 <button

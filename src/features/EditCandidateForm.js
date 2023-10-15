@@ -1,19 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-const AddCandidateForm = () => {
+const EditCandidateForm = () => {
+  const { id } = useParams();
   const [formData, setFormData] = useState({
     name: "",
-    state: "Andhra Pradesh", // Default to "Andhra Pradesh"
+    state: "Andhra Pradesh",
     candidatePhoto: null,
-    party: "BJP", // Default to "BJP"
+    party: "BJP",
     partyPhoto: null,
-    status: "Pending", // Default to "Pending"
+    status: "Pending",
     manifesto: "",
-    voteCount: 0,
+    voteCount: 0, // Provide an appropriate initial value
   });
+
+  useEffect(() => {
+    // Fetch candidate data based on the 'id' from the URL
+    fetch(`${process.env.REACT_APP_API_URL}/api/candidates/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setFormData(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, [id]);
 
   const [showCancelModal, setShowCancelModal] = useState(false);
 
@@ -38,8 +51,8 @@ const AddCandidateForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle saving the formData (e.g., make an API request to save it in your database)
-    fetch(`${process.env.REACT_APP_API_URL}/api/candidates`, {
-      method: "POST",
+    fetch(`${process.env.REACT_APP_API_URL}/api/candidates/${id}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json", // Adjust the content type as needed
       },
@@ -54,12 +67,12 @@ const AddCandidateForm = () => {
       .then((data) => {
         // Handle the successful response from the server
         console.log("Response from server:", data);
-        toast.success("Candidate saved successfully!"); // Display a success toast
+        toast.success("Candidate updated successfully!"); // Display a success toast
       })
       .catch((error) => {
         // Handle errors
         console.error("Error:", error);
-        toast.error("Error saving candidate"); // Display an error toast
+        toast.error("Error updating candidate"); // Display an error toast
       });
   };
 
@@ -159,7 +172,7 @@ const AddCandidateForm = () => {
       <div className="container-fluid bg-light p-4">
         <div className="row">
           <div className="col-md-6 border p-4">
-            <h1 className="text-center">Add Candidate</h1>
+            <h1 className="text-center">Edit Candidate</h1>
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="name" className="form-label">
@@ -393,4 +406,4 @@ const AddCandidateForm = () => {
   );
 };
 
-export default AddCandidateForm;
+export default EditCandidateForm;
