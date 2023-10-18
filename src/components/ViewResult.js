@@ -1,19 +1,41 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import "../Styles/Result.css";
 import { Link } from "react-router-dom";
-export default function ViewResult(props) {
+export default function ViewResult() {
+  const [candidates, setCandidates] = useState([]);
+
+  useEffect(() => {
+    // Fetch candidate data from the API
+    fetch(`${process.env.REACT_APP_API_URL}/api/candidates`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Set the fetched data to the candidates state
+        setCandidates(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []); // Empty dependency array ensures this effect runs only once
+
   return (
     <>
       <h1 className="result">The Results are out !!</h1>
       <p className="result">
-        click here to check winner <Link to="/winner">check winner</Link>
+        click here to check winner{" "}
+        <Link to="/midoff/check-winner">check winner</Link>
       </p>
       <div
         className="votingCard container"
         style={{ backgroundColor: "whitesmoke" }}
       >
         <div className="m-5 row my-2">
-          {props.votingCandidate.map((candidate) => (
+          {candidates.map((candidate) => (
             <div
               className="col-lg-4"
               style={{ paddingTop: "20px", paddingBottom: "20px" }}

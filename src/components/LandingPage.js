@@ -3,10 +3,12 @@ import mainImg from "../assets/images/voteImg.webp";
 import Footer from "./Footer";
 import LandingFeatures from "./LandingFeatures";
 import AboutUs from "./AboutUs";
+import Navbar from "./Navbar";
 
 export default function LandingPage(props) {
   return (
     <>
+      <Navbar />
       <div style={{ backgroundColor: "#a8e6cf" }}>
         <div className="row">
           <div
@@ -39,9 +41,6 @@ export default function LandingPage(props) {
           </div>
         </div>
 
-        <button type="button" class="btn btn-primary" onClick={props.toggle}>
-          {props.btnTxt}
-        </button>
         <LandingFeatures />
         <AboutUs />
         <Footer />
