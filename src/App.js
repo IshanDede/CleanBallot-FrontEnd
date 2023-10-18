@@ -7,27 +7,18 @@ import "./App.css";
 // } from "react-router-dom";
 
 // AdminSide's Work
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { BrowserRouter as Router, Routes, Route, RouterProvider } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css"; // Import the CSS
-import AdminPage from "./pages/AdminPage";
-import AdminLogin from "./pages/AdminLogin";
-import AdminRegister from "./pages/AdminRegister";
-import CandidatePage from "./pages/CandidatePage";
-import AddCandidateForm from "./features/AddCandidateForm";
-import VoterPage from "./pages/VoterPage";
-import AddVoterForm from "./features/AddVoterForm";
-import EditCandidateForm from "./features/EditCandidateForm";
-import EditVoterForm from "./features/EditVoterForm";
+
 
 // Non-Admin's Work
 import "./App.css";
-import { useState } from "react";
-import { useEffect } from "react";
-import HomePage from "./components/HomePage";
-import Navbar from "./components/Navbar";
-import ViewResult from "./components/ViewResult";
-import Winner from "./components/Winner";
+import { Suspense, useState } from "react";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+// import { Provider } from "react-redux";
+import { router } from "./routes/router";
+import { Toaster } from "react-hot-toast";
 
 // const router = createBrowserRouter([
 //   {
@@ -64,7 +55,51 @@ import Winner from "./components/Winner";
 //   },
 // ]);
 function App() {
-  const votingcandidates = [
+
+  const client = new QueryClient({
+    defaultOptions:{
+      queries:{
+        suspense:true,
+      },
+    },
+  });
+  
+ // Empty dependency array ensures this effect runs only once
+
+  return (
+    <>
+      {/* <RouterProvider router={router}>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={3000}
+          hideProgressBar
+        />
+      </RouterProvider> */}
+      {/* {console.log(candidates)} */}
+
+      <QueryClientProvider client={client}>
+        <Suspense fallback={(<div className="grid min-h-50v place-items-center"><div className="w-full h-full border-4 border-dashed rounded-full border-sky-700 animate-spin"/></div>)}>
+          {/* <Provider store={}> */}
+              <RouterProvider router={router}/>
+              <Toaster/>
+          {/* </Provider> */}
+        </Suspense>
+      </QueryClientProvider>
+      
+    </>
+  );
+}
+
+export default App;
+
+
+/**
+ * 
+ * 
+ * 
+ * 
+ * 
+ * const votingcandidates = [
     {
       id: 1,
       name: "Narendra Modi",
@@ -112,81 +147,4 @@ function App() {
     },
   ];
 
-  const [candidates, setCandidates] = useState([]);
-
-  useEffect(() => {
-    // Fetch candidate data from the API
-    fetch(`${process.env.REACT_APP_API_URL}/api/candidates`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // Set the fetched data to the candidates state
-        setCandidates(data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }, []); // Empty dependency array ensures this effect runs only once
-
-  const handleClick = () => {
-    alert("Button clicked!");
-  };
-
-  return (
-    <>
-      {/* <RouterProvider router={router}>
-        <ToastContainer
-          position="bottom-right"
-          autoClose={3000}
-          hideProgressBar
-        />
-      </RouterProvider> */}
-      {console.log(candidates)}
-      <Router>
-        <Navbar />
-
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <HomePage
-                votingCandidate={candidates}
-                handleClick={handleClick}
-              />
-            }
-          />
-          <Route
-            path="/viewResult"
-            element={<ViewResult votingCandidate={candidates} />}
-          />
-          {/* <Route
-            path="/winner"
-            element={
-              <Winner
-                img={}
-                name={candidates[0].name}
-                party={candidates[0].party}
-                vote={candidates[0].voteCount}
-              />
-            }
-          /> */}
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/login" element={<AdminLogin />} />
-          <Route path="/register" element={<AdminRegister />} />
-          <Route path="/candidate" element={<CandidatePage />} />
-          <Route path="/addCandidate" element={<AddCandidateForm />} />
-          <Route path="/editCandidate/:id" element={<EditCandidateForm />} />
-          <Route path="/voter" element={<VoterPage />} />
-          <Route path="/addVoter" element={<AddVoterForm />} />
-          <Route path="/editVoter/:id" element={<EditVoterForm />} />
-        </Routes>
-      </Router>
-    </>
-  );
-}
-
-export default App;
+ */
