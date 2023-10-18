@@ -1,7 +1,6 @@
 import React from "react";
 import Info from "./Info";
 import Votingcard from "./Votingcard";
-import Footer from "./Footer";
 
 export default function HomePage(props) {
   return (
@@ -11,7 +10,6 @@ export default function HomePage(props) {
         votingCandidate={props.votingCandidate}
         handleClick={props.handleClick}
       />
-      <Footer />
     </>
   );
 }

@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function Navbar() {
+export default function Navbar(props) {
   return (
     <>
-      <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <div style={{ padding: "2px" }}>
+        <nav className="navbar navbar-expand-lg">
           <Link className="navbar-brand" to="/">
             Clean Ballot
           </Link>
@@ -32,15 +32,26 @@ export default function Navbar() {
                 </Link>
               </li>
               <li className="nav-item">
+                <Link className="nav-link" to="/vote">
+                  Vote
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link className="nav-link" to="/login">
                   Login
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/viewResult">
-                  View Result
-                </Link>
-              </li>
+              {props.isEnabled ? (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/viewResult">
+                    View Result
+                  </Link>
+                </li>
+              ) : (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/viewResult"></Link>
+                </li>
+              )}
             </ul>
           </div>
         </nav>

@@ -1,6 +1,11 @@
 .result {
+  color: #006778;
   text-align: center;
   padding: 15px;
   font-family: Georgia, "Times New Roman", Times, serif;
   font-weight: bolder;
+}
+
+.Link {
+  text-decoration: none;
 }

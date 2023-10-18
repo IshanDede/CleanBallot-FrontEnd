@@ -24,10 +24,13 @@ import EditVoterForm from "./features/EditVoterForm";
 import "./App.css";
 import { useState } from "react";
 import { useEffect } from "react";
+import LandingPage from "./components/LandingPage";
 import HomePage from "./components/HomePage";
 import Navbar from "./components/Navbar";
 import ViewResult from "./components/ViewResult";
 import Winner from "./components/Winner";
+import IMG from "./assets/images/bg_11.jpg";
+import Finisher from "./components/Finisher";
 
 // const router = createBrowserRouter([
 //   {
@@ -132,38 +135,82 @@ function App() {
       });
   }, []); // Empty dependency array ensures this effect runs only once
 
-  const handleClick = () => {
-    alert("Button clicked!");
+  const [isEnabled, setIsEnabled] = useState(false);
+  const [buttonText, setButtonText] = useState("Enable");
+
+  const toggleButton = () => {
+    setIsEnabled(!isEnabled);
+    if (buttonText === "Enable") {
+      setButtonText("Disable");
+    } else {
+      setButtonText("Enable");
+    }
+  };
+
+  const handleButtonClick = (id) => {
+    const item = candidates.find((obj) => obj._id === id);
+    const number = item.voteCount + 1;
+
+    // Handle the button click for the specific item with the given id
+    console.log(`Button with id ${id} clicked.`);
+    fetch(`${process.env.REACT_APP_API_URL}/api/candidates/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json", // Set the content type as needed
+        // You may need to include authentication headers, if required
+        // 'Authorization': 'Bearer <token>',
+      },
+      body: JSON.stringify({ voteCount: number }), // Replace with your data
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json(); // Parse the response as JSON
+      })
+      .then((data) => {
+        console.log("Data:", data); // Handle the response data
+      })
+      .catch((error) => {
+        console.error("Error:", error); // Handle errors
+      });
   };
 
   return (
     <>
-      {/* <RouterProvider router={router}>
+      <div>
+        {/* <RouterProvider router={router}>
         <ToastContainer
           position="bottom-right"
           autoClose={3000}
           hideProgressBar
         />
       </RouterProvider> */}
-      {console.log(candidates)}
-      <Router>
-        <Navbar />
+        {console.log(candidates)}
+        <Router>
+          <Navbar isEnabled={isEnabled} />
 
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <HomePage
-                votingCandidate={candidates}
-                handleClick={handleClick}
-              />
-            }
-          />
-          <Route
-            path="/viewResult"
-            element={<ViewResult votingCandidate={candidates} />}
-          />
-          {/* <Route
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <LandingPage toggle={toggleButton} btnTxt={buttonText} />
+              }
+            />
+            <Route
+              path="/vote"
+              element={
+                <HomePage
+                  votingCandidate={candidates}
+                  handleClick={handleButtonClick}
+                />
+              }
+            />
+            <Route
+              path="/viewResult"
+              element={<ViewResult votingCandidate={candidates} />}
+            />
+            {/* <Route
             path="/winner"
             element={
               <Winner
@@ -174,17 +221,18 @@ function App() {
               />
             }
           /> */}
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/login" element={<AdminLogin />} />
-          <Route path="/register" element={<AdminRegister />} />
-          <Route path="/candidate" element={<CandidatePage />} />
-          <Route path="/addCandidate" element={<AddCandidateForm />} />
-          <Route path="/editCandidate/:id" element={<EditCandidateForm />} />
-          <Route path="/voter" element={<VoterPage />} />
-          <Route path="/addVoter" element={<AddVoterForm />} />
-          <Route path="/editVoter/:id" element={<EditVoterForm />} />
-        </Routes>
-      </Router>
+            <Route path="/admin" element={<AdminPage />} />
+            <Route path="/login" element={<AdminLogin />} />
+            <Route path="/register" element={<AdminRegister />} />
+            <Route path="/candidate" element={<CandidatePage />} />
+            <Route path="/addCandidate" element={<AddCandidateForm />} />
+            <Route path="/editCandidate/:id" element={<EditCandidateForm />} />
+            <Route path="/voter" element={<VoterPage />} />
+            <Route path="/addVoter" element={<AddVoterForm />} />
+            <Route path="/editVoter/:id" element={<EditVoterForm />} />
+          </Routes>
+        </Router>
+      </div>
     </>
   );
 }

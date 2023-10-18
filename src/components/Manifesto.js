@@ -7,7 +7,7 @@ export default function Manifesto(props) {
         <div className="popup-inner">
           <div className="close-btn">
             <button onClick={() => props.setTrigger(false)}>close</button>
-            {props.children}
+            {props.item}
           </div>
         </div>
       </div>
