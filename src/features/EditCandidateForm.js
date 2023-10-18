@@ -340,7 +340,7 @@ const EditCandidateForm = () => {
               >
                 Cancel
               </button>
-              <Link to="/candidate" className="btn btn-secondary ms-2">
+              <Link to="/admin/candidate" className="btn btn-secondary ms-2">
                 Back to Candidate Page
               </Link>
             </form>

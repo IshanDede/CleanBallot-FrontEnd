@@ -51,7 +51,7 @@ const CandidatePage = () => {
       <Link to="/admin">
         <button className="btn btn-primary mb-3">Back to Admin</button>
       </Link>
-      <Link to="/addCandidate">
+      <Link to="/admin/addCandidate">
         <button className="btn btn-primary ms-3 mb-3">Add Candidate</button>
       </Link>
       <table className="table table-striped">
@@ -89,7 +89,7 @@ const CandidatePage = () => {
               <td>
                 <Link
                   to={{
-                    pathname: `/editCandidate/${candidate._id}`,
+                    pathname: `/admin/editCandidate/${candidate._id}`,
                   }}
                 >
                   <button className="btn btn-warning me-2">

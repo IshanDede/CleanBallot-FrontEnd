@@ -1,7 +1,37 @@
-import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function AdminLogin() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
+      if (response.ok) {
+        // Authentication successful, handle the response, e.g., store tokens.
+        console.log("Login successful");
+      } else {
+        const data = await response.json();
+        // Authentication failed, display an error message.
+        console.log("Login failed: ", data.message);
+      }
+    } catch (error) {
+      // Handle request error, display an error message.
+      console.error("Login request error: ", error);
+    }
+  };
+
   return (
     <>
       <section className="vh-100" style={{ backgroundColor: "#9A616D" }}>
@@ -39,10 +69,15 @@ export default function AdminLogin() {
                         <div className="form-outline mb-4">
                           <input
                             type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             id="form2Example17"
                             className="form-control form-control-lg"
                           />
-                          <label className="form-label" for="form2Example17">
+                          <label
+                            className="form-label"
+                            htmlFor="form2Example17"
+                          >
                             Email address
                           </label>
                         </div>
@@ -50,10 +85,15 @@ export default function AdminLogin() {
                         <div className="form-outline mb-4">
                           <input
                             type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             id="form2Example27"
                             className="form-control form-control-lg"
                           />
-                          <label className="form-label" for="form2Example27">
+                          <label
+                            className="form-label"
+                            htmlFor="form2Example27"
+                          >
                             Password
                           </label>
                         </div>
@@ -62,6 +102,7 @@ export default function AdminLogin() {
                           <button
                             className="btn btn-dark btn-lg btn-block"
                             type="button"
+                            onClick={handleLogin}
                           >
                             Login
                           </button>

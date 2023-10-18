@@ -50,7 +50,7 @@ const VoterPage = () => {
       <Link to="/admin">
         <button className="btn btn-primary mb-3">Back to Admin</button>
       </Link>
-      <Link to="/addVoter">
+      <Link to="/admin/addVoter">
         <button className="btn btn-primary ms-3 mb-3">Add Voter</button>
       </Link>
       <table className="table table-striped">
@@ -90,7 +90,7 @@ const VoterPage = () => {
               <td>
                 <Link
                   to={{
-                    pathname: `/editVoter/${voter._id}`,
+                    pathname: `/admin/editVoter/${voter._id}`,
                   }}
                 >
                   <button className="btn btn-warning me-2">

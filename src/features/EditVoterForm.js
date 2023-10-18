@@ -431,7 +431,7 @@ const EditVoterForm = () => {
               >
                 Cancel
               </button>
-              <Link to="/voter" className="btn btn-secondary ms-2">
+              <Link to="/admin/voter" className="btn btn-secondary ms-2">
                 Back to Voter Page
               </Link>
             </form>
