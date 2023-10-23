@@ -35,7 +35,7 @@ const CandidatePage = () => {
       })
       .then(() => {
         // Remove the deleted candidate from the state
-        //prevCandidates is  builtin function that gets created alongside setCandidates
+        // prevCandidates is  builtin function that gets created alongside setCandidates
         setCandidates((prevCandidates) =>
           prevCandidates.filter((candidate) => candidate._id !== id)
         );
@@ -51,7 +51,7 @@ const CandidatePage = () => {
       <Link to="/admin">
         <button className="btn btn-primary mb-3">Back to Admin</button>
       </Link>
-      <Link to="/addCandidate">
+      <Link to="/admin/addCandidate">
         <button className="btn btn-primary ms-3 mb-3">Add Candidate</button>
       </Link>
       <table className="table table-striped">

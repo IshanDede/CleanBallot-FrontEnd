@@ -1,6 +1,7 @@
 import React from "react";
 import Info from "./Info";
 import Votingcard from "./Votingcard";
+
 import { useEffect, useState } from "react";
 
 export default function HomePage(props) {
@@ -24,12 +25,12 @@ export default function HomePage(props) {
       });
   }, []); // Empty dependency array ensures this effect runs only once
 
-  const handleButtonClick = (id) => {
+  const updateVote = (id) => {
     const item = candidates.find((obj) => obj._id === id);
     const number = item.voteCount + 1;
 
     // Handle the button click for the specific item with the given id
-    console.log(`Button with id ${id} clicked.`);
+
     fetch(`${process.env.REACT_APP_API_URL}/api/candidates/${id}`, {
       method: "PATCH",
       headers: {
@@ -56,10 +57,7 @@ export default function HomePage(props) {
   return (
     <>
       <Info />
-      <Votingcard
-        votingCandidate={candidates}
-        handleClick={handleButtonClick}
-      />
+      <Votingcard votingCandidate={candidates} updateVote={updateVote} />
     </>
   );
 }

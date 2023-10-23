@@ -38,7 +38,7 @@ export default function Navbar() {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/login">
-                  Login
+                  Admin
                 </Link>
               </li>
 

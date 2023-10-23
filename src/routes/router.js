@@ -1,6 +1,7 @@
-import React, { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import { Outlet } from "react-router-dom";
+
+import MyComponent from "../components/MyComponent";
 
 import Navbar from "../components/Navbar";
 import ViewResult from "../components/ViewResult";
@@ -112,5 +113,13 @@ export const router = createBrowserRouter([
   {
     path: "/login",
     element: <AdminLogin />,
+  },
+  {
+    path: "/register",
+    element: <AdminRegister />,
+  },
+  {
+    path: "/testing",
+    element: <MyComponent />,
   },
 ]);

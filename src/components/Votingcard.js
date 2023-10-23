@@ -4,6 +4,17 @@ import { useState } from "react";
 
 export default function Votingcard(props) {
   const [buttonPopup, setButtonPopup] = useState(false);
+  const [manifesto, setManifesto] = useState("");
+
+  const disManifesto = (id) => {
+    const item = props.votingCandidate.find((obj) => obj._id === id);
+    setManifesto(item.manifesto);
+  };
+
+  const handleManifesto = (id) => {
+    setButtonPopup(true);
+    disManifesto(id);
+  };
 
   return (
     <>
@@ -41,7 +52,7 @@ export default function Votingcard(props) {
                       </p>
                     </p>
                     <button
-                      onClick={() => setButtonPopup(true)}
+                      onClick={() => handleManifesto(votingcandidate._id)}
                       className="btn btn-primary mx-2"
                     >
                       View Manifesto
@@ -49,10 +60,10 @@ export default function Votingcard(props) {
                     <Manifesto
                       trigger={buttonPopup}
                       setTrigger={setButtonPopup}
-                      key={votingcandidate._id}
+                      Manifesto={manifesto}
                     ></Manifesto>
                     <button
-                      onClick={() => props.handleClick(votingcandidate._id)}
+                      onClick={() => props.updateVote(votingcandidate._id)}
                       className="btn btn-danger mx-2"
                     >
                       Vote

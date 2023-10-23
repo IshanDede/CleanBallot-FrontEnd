@@ -1,10 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 export default function AdminLogin() {
   return (
     <>
-      <section className="vh-100" style={{ backgroundColor: "#9A616D" }}>
+      <Navbar />
+      <section
+        className="container-fluid"
+        style={{ backgroundColor: "#a8e6cf" }}
+      >
         <div className="container py-5 h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col col-xl-10">
@@ -22,11 +27,15 @@ export default function AdminLogin() {
                     <div className="card-body p-4 p-lg-5 text-black">
                       <form>
                         <div className="d-flex align-items-center mb-3 pb-1">
-                          <i
-                            className="fas fa-cubes fa-2x me-3"
-                            style={{ color: "#ff6219" }}
-                          ></i>
-                          <span className="h1 fw-bold">Clean-Ballot</span>
+                          <span
+                            className="h1 fw-bold"
+                            style={{
+                              color: "#006778",
+                              fontFamily: "Anton sans-serif",
+                            }}
+                          >
+                            Clean-Ballot
+                          </span>
                         </div>
 
                         <h5
@@ -62,6 +71,7 @@ export default function AdminLogin() {
                           <button
                             className="btn btn-dark btn-lg btn-block"
                             type="button"
+                            style={{ backgroundColor: "#006778" }}
                           >
                             Login
                           </button>
@@ -79,12 +89,6 @@ export default function AdminLogin() {
                             Register here
                           </Link>
                         </p>
-                        <a href="#!" className="small text-muted">
-                          Terms of use.
-                        </a>
-                        <a href="#!" className="small text-muted">
-                          Privacy policy
-                        </a>
                       </form>
                     </div>
                   </div>
