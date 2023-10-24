@@ -15,12 +15,17 @@ import AddVoterForm from "../features/AddVoterForm";
 import EditCandidateForm from "../features/EditCandidateForm";
 import EditVoterForm from "../features/EditVoterForm";
 import VoteCastPage from "../pages/VoteCastPage";
+import VotingQueue from "../pages/VotingQueue";
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <><div>Landing page Add here</div></>,
         errorElement: <><div>There is some error in react App</div></>,
+    },
+    {
+        path:"/vote-queue",
+        element:<VotingQueue/>
     },
     {
         path:"/midoff",
