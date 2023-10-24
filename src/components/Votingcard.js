@@ -14,7 +14,11 @@ export default function Votingcard(props) {
         >
           <div className="row my-2">
             {props.votingCandidate.map((votingcandidate) => (
-              <div className="container col-lg-4" key={votingcandidate._id}>
+              <div
+                className="container col-lg-4"
+                style={{ paddingBottom: "30px" }}
+                key={votingcandidate._id}
+              >
                 <div className="card mx-10 my-10" style={{ width: "18rem" }}>
                   <img
                     src={`${process.env.REACT_APP_API_URL}${votingcandidate.candidatePhoto}`}
@@ -23,7 +27,9 @@ export default function Votingcard(props) {
                     style={{ width: "18rem", height: "150px" }}
                   />
                   <div className="card-body">
-                    <h3 className="card-title">{votingcandidate.name}</h3>
+                    <h3 className="card-title" style={{ color: "#006778" }}>
+                      {votingcandidate.name}
+                    </h3>
                     <span>
                       <h6 className="votingCard">
                         Runnung to Be: Prime Minister
@@ -43,11 +49,10 @@ export default function Votingcard(props) {
                     <Manifesto
                       trigger={buttonPopup}
                       setTrigger={setButtonPopup}
-                    >
-                      <p>{votingcandidate.Manifesto}</p>
-                    </Manifesto>
+                      key={votingcandidate._id}
+                    ></Manifesto>
                     <button
-                      onClick={props.handleClick}
+                      onClick={() => props.handleClick(votingcandidate._id)}
                       className="btn btn-danger mx-2"
                     >
                       Vote

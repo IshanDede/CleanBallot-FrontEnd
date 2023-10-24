@@ -4,10 +4,13 @@ import "../Styles/Footer.css";
 export default function Footer() {
   return (
     <>
-      <div className="body">
+      <div
+        className="body"
+        style={{ backgroundColor: "#CAF1DE", padding: "40px" }}
+      >
         <div className="footerBody">
           <h1>Clean-Ballot</h1>
-          <p>
+          <p style={{ color: "black" }}>
             The innovative and secure digital platform designed to modernize the
             traditional voting process.
           </p>

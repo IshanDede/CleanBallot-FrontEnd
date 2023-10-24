@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import QrReader from 'react-weblineindia-qrcode-scanner'
+import { useGlobalContext } from '../contexts';
+import TempButton from '../components/TempButton';
 
 class VotingQueue extends Component {
   constructor(props) {
+    
     super(props)
     this.userIdRef = React.createRef();
 
@@ -40,10 +43,12 @@ class VotingQueue extends Component {
       
     // }
   }
+
   handleError(err) {
     console.error(err)
   }
   render() {
+    
     const previewStyle = {
       height: 240,
       width: 320,
@@ -90,9 +95,7 @@ class VotingQueue extends Component {
                 alt="User"
                 className="img-fluid"
               />
-              <button className="btn btn-primary" onClick={()=>{console.log("shit added")}}>
-                Add to Queue
-              </button>
+             <TempButton id={this.state.userId}/>
             </div>
           )}
         </div>
