@@ -21,7 +21,6 @@ export default function LandingFeatures() {
             color: "#006778",
             fontSize: "40px",
             fontFamily: "Anton sans-serif",
-            fontSize: "50px",
           }}
         >
           Features
